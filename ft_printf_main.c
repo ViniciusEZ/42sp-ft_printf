@@ -6,7 +6,7 @@
 /*   By: vfirmino <vfirmino@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 20:28:04 by vfirmino          #+#    #+#             */
-/*   Updated: 2025/08/19 01:41:45 by vfirmino         ###   ########.fr       */
+/*   Updated: 2025/09/01 16:05:02 by vfirmino         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ int	ft_format(va_list ap, char c, const char *str, size_t i)
 	if (c == '%')
 		return (ft_putchar('%'));
 	if (c == 'x')
-		return (ft_puthex(va_arg(ap, unsigned long), "0123456789abcdef", str,
-				i));
+		return (ft_puthex((unsigned long)va_arg(ap, unsigned int),
+				"0123456789abcdef", str, i));
 	if (c == 'X')
-		return (ft_puthex(va_arg(ap, unsigned long), "0123456789ABCDEF", str,
-				i));
+		return (ft_puthex((unsigned long)va_arg(ap, unsigned int),
+				"0123456789ABCDEF", str, i));
 	if (c == 'p')
 		return (ft_putptr(va_arg(ap, void *), "0123456789abcdef", str, i));
 	return (0);
@@ -63,7 +63,7 @@ int	ft_printf(const char *ptr, ...)
 		if (ptr[i] == '%' && ptr[i + 1])
 		{
 			i++;
-			while (ptr[i] == '#')
+			while (ptr[i] == '#' || (ptr[i] >= '0' && ptr[i] <= '9'))
 				i++;
 			len += ft_format(ap, ptr[i], ptr, i);
 		}
